@@ -2,6 +2,17 @@ import java.io.*;
 import java.util.Scanner;
 
 public class Main {
+    // does the string contain a name with this regex pattern: word (letters only), space, word (alphanumeric characters)
+    public static Boolean isNameValid(String nameString) {
+        if (nameString.matches("^[a-zA-Z]+[\\s][\\w]+$")) {
+            System.out.println("First name and last name OK");
+            return true;
+        } else {
+            System.out.println("First name and last name NOT OK");
+            return false;
+        }
+    }
+
     public static Boolean readFromFile(String inFilename, String outFilename) {
         try (BufferedReader inFileReader = new BufferedReader(new FileReader(inFilename))) {
             String firstLine = inFileReader.readLine();
@@ -11,6 +22,9 @@ public class Main {
                 System.out.println("Error: Input file is empty!");
                 return true;
             }
+
+            // first line -> regex pattern: word (letters only), space, word (alphanumeric characters)
+            isNameValid(firstLine);
         } catch (Exception e) {
             System.out.println("Input file access error!");
         }
