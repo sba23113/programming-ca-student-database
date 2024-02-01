@@ -74,6 +74,25 @@ public class Main {
             // third line -> regex pattern: (number) 2, (number) 0-4, letter, letter, letter(?), (number) 1-200
             String thirdLine = inFileReader.readLine();
             isStudentNumberValid(thirdLine);
+
+            // write trade details to output file (append mode)
+            try (BufferedWriter outFileReader = new BufferedWriter(new FileWriter(inFilename, true))) {
+                outFileReader.write(thirdLine + " - " + firstLine.split(" ")[1] + "\n");
+                String workloadStr = "";
+                int classCount = Integer.parseInt(secondLine);
+                if (classCount == 1) {
+                    workloadStr = "Very Light";
+                } else if (classCount == 2) {
+                    workloadStr = "Light";
+                } else if (classCount > 2 && classCount < 6) {
+                    workloadStr = "Part Time";
+                } else if (classCount >= 6) {
+                    workloadStr = "Full Time";
+                }
+                outFileReader.write(workloadStr + "\n");
+            } catch (IOException e) {
+                System.out.println("Error: Couldn't update " + outFilename + " file!");
+            }
         } catch (Exception e) {
             System.out.println("Input file access error!");
         }
