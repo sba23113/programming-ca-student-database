@@ -128,6 +128,22 @@ public class Main {
         }
     }
 
+    public static void readFromConsole(Scanner scanner, String outFilename) {
+        String userInput, studentName;
+        while (true) {
+            System.out.println();
+            System.out.println("**********************************************************************");
+            System.out.println("STUDENT DATABASE - MANUAL STUDENT ENTRY");
+            System.out.println("**********************************************************************");
+            System.out.println();
+            System.out.println("Enter student details as prompted (submitting empty line will return to main menu).");
+            System.out.println("Enter the student's name:");
+            if (!getDetailsFromConsole(scanner)) {
+                break;
+            }
+        }
+    }
+
     public static void writeToFile(String outFilename, String studentName, String yearString, String studentNumber) {
         // write student details to output file (append mode)
         try (BufferedWriter outFileReader = new BufferedWriter(new FileWriter(outFilename, true))) {
@@ -157,7 +173,7 @@ public class Main {
         while (true) {
             System.out.println();
             System.out.println("**********************************************************************");
-            System.out.println("STUDENT DATABASE");
+            System.out.println("STUDENT DATABASE - MAIN MENU");
             System.out.println("**********************************************************************");
             System.out.println();
             System.out.println("Available actions:");
@@ -175,7 +191,7 @@ public class Main {
                 System.out.printf("Updating \"%s\" file... \n", outFilename);
                 readFromFile(inFilename, outFilename);
             } else if (choice == 2) {
-                System.out.println("choice 2");
+                readFromConsole(outFilename);
             }
             System.out.println("\nUpdate complete.");
         }
