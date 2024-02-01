@@ -13,6 +13,23 @@ public class Main {
         }
     }
 
+    // does next line contain number between 1 and 8 (incl.)
+    public static Boolean isClassCountValid(String classString) {
+        try {
+            int classCount = Integer.parseInt(classString);
+            if (classCount < 1 || classCount > 8) {
+                System.out.println("Number of classes must be between 1 and 8 inclusive");
+                return false;
+            } else {
+                System.out.println("Class info OK");
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println("Second line is not a number");
+            return false;
+        }
+    }
+
     public static Boolean readFromFile(String inFilename, String outFilename) {
         try (BufferedReader inFileReader = new BufferedReader(new FileReader(inFilename))) {
             String firstLine = inFileReader.readLine();
@@ -25,6 +42,10 @@ public class Main {
 
             // first line -> regex pattern: word (letters only), space, word (alphanumeric characters)
             isNameValid(firstLine);
+
+            // second line -> confirm next line contains number between 1 and 8 (incl.)
+            String secondLine = inFileReader.readLine();
+            isClassCountValid(secondLine);
         } catch (Exception e) {
             System.out.println("Input file access error!");
         }
