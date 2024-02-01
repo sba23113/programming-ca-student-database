@@ -41,10 +41,7 @@ public class Main {
         try {
             year = Integer.parseInt(studentCode.substring(0, 2));
         } catch (Exception e) {
-            System.out.println("\nFollowing entry will not be written to output file:");
-            System.out.printf("Student name: %s", studentName);
-            System.out.printf("\nReason: Student number format invalid (%s)", studentCode);
-            System.out.println("\nCorrect format: Last two digits of a year (2020-2024) + course type (MSC, DIP, etc.) + ID number between 1 and 200 (incl.)");
+            studentNumberPrintError(studentName, studentCode);
             return false;
         }
 
@@ -60,10 +57,7 @@ public class Main {
                 studentIdStr = studentCode.substring(4);
             }
         } else {
-            System.out.println("\nFollowing entry will not be written to output file:");
-            System.out.printf("Student name: %s", studentName);
-            System.out.printf("\nReason: Student number format invalid (%s)", studentCode);
-            System.out.println("\nCorrect format: Last two digits of a year (2020-2024) + course type (MSC, DIP, etc.) + ID number between 1 and 200 (incl.)");
+            studentNumberPrintError(studentName, studentCode);
             return false;
         }
 
@@ -71,10 +65,7 @@ public class Main {
         char[] chars = courseCode.toCharArray();
         for (char c : chars) {
             if(!Character.isLetter(c)) {
-                System.out.println("\nFollowing entry will not be written to output file:");
-                System.out.printf("Student name: %s", studentName);
-                System.out.printf("\nReason: Student number format invalid (%s)", studentCode);
-                System.out.println("\nCorrect format: Last two digits of a year (2020-2024) + course type (MSC, DIP, etc.) + ID number between 1 and 200 (incl.)");
+                studentNumberPrintError(studentName, studentCode);
                 return false;
             }
         }
@@ -82,31 +73,28 @@ public class Main {
         try {
             studentID = Integer.parseInt(studentIdStr);
             if (studentID < 1 || studentID > 200) {
-                System.out.println("\nFollowing entry will not be written to output file:");
-                System.out.printf("Student name: %s", studentName);
-                System.out.printf("\nReason: Student number format invalid (%s)", studentCode);
-                System.out.println("\nCorrect format: Last two digits of a year (2020-2024) + course type (MSC, DIP, etc.) + ID number between 1 and 200 (incl.)");
+                studentNumberPrintError(studentName, studentCode);
                 return false;
             }
         } catch (Exception e) {
-            System.out.println("\nFollowing entry will not be written to output file:");
-            System.out.printf("Student name: %s", studentName);
-            System.out.printf("\nReason: Student number format invalid (%s)", studentCode);
-            System.out.println("\nCorrect format: Last two digits of a year (2020-2024) + course type (MSC, DIP, etc.) + ID number between 1 and 200 (incl.)");
+            studentNumberPrintError(studentName, studentCode);
             return false;
         }
 
         if (year >= 20 && year <= 24) {
             return true;
         } else {
-            System.out.println("\nFollowing entry will not be written to output file:");
-            System.out.printf("Student name: %s", studentName);
-            System.out.printf("\nReason: Student number format invalid (%s)", studentCode);
-            System.out.println("\nCorrect format: Last two digits of a year (2020-2024) + course type (MSC, DIP, etc.) + ID number between 1 and 200 (incl.)");
+            studentNumberPrintError(studentName, studentCode);
             return false;
         }
     }
 
+    public static void studentNumberPrintError(String studentName, String studentCode) {
+        System.out.println("\nFollowing entry will not be written to output file:");
+        System.out.printf("Student name: %s", studentName);
+        System.out.printf("\nReason: Student number format invalid (%s)", studentCode);
+        System.out.println("\nCorrect format: Last two digits of a year (2020-2024) + course type (MSC, DIP, etc.) + ID number between 1 and 200 (incl.)");
+    }
     public static Boolean readFromFile(String inFilename, String outFilename) {
         String line;
         String studentName = "";
