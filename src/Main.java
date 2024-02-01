@@ -95,7 +95,7 @@ public class Main {
         System.out.printf("\nReason: Student number format invalid (%s)", studentCode);
         System.out.println("\nCorrect format: Last two digits of a year (2020-2024) + course type (MSC, DIP, etc.) + ID number between 1 and 200 (incl.)");
     }
-    public static Boolean readFromFile(String inFilename, String outFilename) {
+    public static void readFromFile(String inFilename, String outFilename) {
         String line;
         String studentName = "";
         String yearString = "";
@@ -126,8 +126,6 @@ public class Main {
             System.out.println();
             System.out.println("Input file access error!");
         }
-
-        return false;
     }
 
     public static void writeToFile(String outFilename, String studentName, String yearString, String studentNumber) {
@@ -175,9 +173,7 @@ public class Main {
                 break;
             } else if (choice == 1) {
                 System.out.printf("Updating \"%s\" file... \n", outFilename);
-                if (readFromFile(inFilename, outFilename)) {
-                    break;
-                }
+                readFromFile(inFilename, outFilename);
             } else if (choice == 2) {
                 System.out.println("choice 2");
             }
