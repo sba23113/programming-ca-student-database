@@ -30,6 +30,30 @@ public class Main {
         }
     }
 
+    public static Boolean isStudentNumberValid(String studentCode) {
+        int year = Integer.parseInt(studentCode.substring(0, 2));
+
+        String courseCode;
+        int studentID;
+        if (Character.isLetter(studentCode.charAt(4))) {
+            courseCode = studentCode.substring(2, 5);
+            studentID = Integer.parseInt(studentCode.substring(5));
+        } else {
+            courseCode = studentCode.substring(2, 4);
+            studentID = Integer.parseInt(studentCode.substring(4));
+        }
+
+        if (year >= 20 && year <= 24) {
+            System.out.printf("student number OK: %d %s %d", year, courseCode, studentID);
+            System.out.println();
+            System.out.println();
+            return true;
+        } else {
+            System.out.println("student number NOT OK");
+            return false;
+        }
+    }
+
     public static Boolean readFromFile(String inFilename, String outFilename) {
         try (BufferedReader inFileReader = new BufferedReader(new FileReader(inFilename))) {
             String firstLine = inFileReader.readLine();
@@ -46,6 +70,10 @@ public class Main {
             // second line -> confirm next line contains number between 1 and 8 (incl.)
             String secondLine = inFileReader.readLine();
             isClassCountValid(secondLine);
+
+            // third line -> regex pattern: (number) 2, (number) 0-4, letter, letter, letter(?), (number) 1-200
+            String thirdLine = inFileReader.readLine();
+            isStudentNumberValid(thirdLine);
         } catch (Exception e) {
             System.out.println("Input file access error!");
         }
