@@ -47,6 +47,10 @@ public class Main {
         int year;
         try {
             year = Integer.parseInt(studentCode.substring(0, 2));
+            if (year < 20 || year > 24) {
+                studentNumberPrintError(studentName, studentCode);
+                return false;
+            }
         } catch (Exception e) {
             studentNumberPrintError(studentName, studentCode);
             return false;
@@ -89,12 +93,7 @@ public class Main {
             return false;
         }
 
-        if (year >= 20 && year <= 24) {
-            return true;
-        } else {
-            studentNumberPrintError(studentName, studentCode);
-            return false;
-        }
+        return true;
     }
 
     public static void studentNumberPrintError(String studentName, String studentCode) {
