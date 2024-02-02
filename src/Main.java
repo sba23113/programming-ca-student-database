@@ -58,17 +58,20 @@ public class Main {
 
         // course code part of validation
         String courseCode;
+        String studentIdString;
         int studentID;
-        String studentIdStr;
+
         if (studentCode.length() > 4) {
+            // min length of a valid code is 5 characters -> check if course code in after year portion is 2 or 3 characters long
             if (Character.isLetter(studentCode.charAt(4))) {
                 courseCode = studentCode.substring(2, 5);
-                studentIdStr = studentCode.substring(5);
+                studentIdString = studentCode.substring(5); // rest of the string is the student's ID number
             } else {
                 courseCode = studentCode.substring(2, 4);
-                studentIdStr = studentCode.substring(4);
+                studentIdString = studentCode.substring(4); // rest of the string is the student's ID number
             }
         } else {
+            // if student code is too short to be valid
             studentNumberPrintError(studentName, studentCode);
             return false;
         }
@@ -77,13 +80,15 @@ public class Main {
         char[] chars = courseCode.toCharArray();
         for (char c : chars) {
             if(!Character.isLetter(c)) {
+                // if course code string format is invalid
                 studentNumberPrintError(studentName, studentCode);
                 return false;
             }
         }
 
+        // check if student ID number is actually a number and it is within the allowed range (1-200)
         try {
-            studentID = Integer.parseInt(studentIdStr);
+            studentID = Integer.parseInt(studentIdString);
             if (studentID < 1 || studentID > 200) {
                 studentNumberPrintError(studentName, studentCode);
                 return false;
@@ -152,6 +157,7 @@ public class Main {
         System.out.println("STUDENT DATABASE - MANUAL STUDENT ENTRY");
         System.out.println("**********************************************************************");
 
+        // prompt user for student details until empty line submitted
         while (true) {
             System.out.println();
             System.out.println("Enter student details or submit an empty line to return to main menu.");
@@ -164,21 +170,24 @@ public class Main {
     public static boolean getDetailsFromConsole(Scanner scanner, String outFilename) {
         String userInput, studentName, classCountString, studentNumber;
 
+        // get student's name
         System.out.print("\nStudent's name: ");
         userInput = scanner.nextLine();
-        if (userInput.isEmpty()) {
+
+        if (userInput.isEmpty()) { // exit to main menu if empty line
             return false;
-        } else if (!isNameValid(userInput)) {
+        } else if (!isNameValid(userInput)) { // start over if entry invalid
             return true;
         } else {
             studentName = userInput;
         }
 
+        // get number of classes
         System.out.print("Number of classes (1-8): ");
         userInput = scanner.nextLine();
-        if (userInput.isEmpty()) {
+        if (userInput.isEmpty()) { // exit to main menu if empty line
             return false;
-        } else if (!isClassCountValid(userInput, studentName)) {
+        } else if (!isClassCountValid(userInput, studentName)) { // start over if entry invalid
             return true;
         } else {
             classCountString = userInput;
@@ -186,14 +195,15 @@ public class Main {
 
         System.out.print("Student's ID number: ");
         userInput = scanner.nextLine();
-        if (userInput.isEmpty()) {
+        if (userInput.isEmpty()) { // exit to main menu if empty line
             return false;
-        } else if (!isStudentNumberValid(userInput, studentName)) {
+        } else if (!isStudentNumberValid(userInput, studentName)) { // start over if entry invalid
             return true;
         } else {
             studentNumber = userInput;
         }
 
+        // write entry to output file
         writeToFile(outFilename, studentName, classCountString, studentNumber);
 
         return true;
@@ -203,6 +213,8 @@ public class Main {
         // write student details to output file (append mode)
         try (BufferedWriter outFileReader = new BufferedWriter(new FileWriter(outFilename, true))) {
             outFileReader.write(studentNumber + " - " + studentName.split(" ")[1] + "\n");
+
+            // add a descripion of student's workload to output file
             String workloadStr = "";
             int classCount = Integer.parseInt(classCountString);
             if (classCount == 1) {
@@ -214,7 +226,10 @@ public class Main {
             } else if (classCount >= 6) {
                 workloadStr = "Full Time";
             }
+
             outFileReader.write(workloadStr + "\n");
+
+            // confirm successfull update of output file
             System.out.printf("\n\"%s\" entry added to output file!\n", studentName);
         } catch (IOException e) {
             System.out.println("Error: Output file access error!");
