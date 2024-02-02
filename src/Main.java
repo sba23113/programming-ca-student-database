@@ -7,7 +7,7 @@ public class Main {
         if (nameString.matches("^[a-zA-Z]+[\\s][\\w]+$")) {
             return true;
         } else {
-            System.out.println("\nFollowing entry will not be written to output file:");
+            System.out.println("\nThis entry will not be written to output file:");
             System.out.printf("Student name: %s", nameString);
             System.out.println("\nReason: Student name format invalid");
             System.out.println("Correct format: Word (letters only), space, word (alphanumeric characters)");
@@ -20,7 +20,7 @@ public class Main {
         try {
             int classCount = Integer.parseInt(classString);
             if (classCount < 1 || classCount > 8) {
-                System.out.println("\nFollowing entry will not be written to output file:");
+                System.out.println("\nThis entry will not be written to output file:");
                 System.out.printf("Student name: %s", studentName);
                 System.out.println("\nReason: Number of classes must be between 1 and 8 inclusive");
                 return false;
@@ -28,7 +28,7 @@ public class Main {
                 return true;
             }
         } catch (Exception e) {
-            System.out.println("\nFollowing entry will not be written to output file:");
+            System.out.println("\nThis entry will not be written to output file:");
             System.out.printf("Student name: %s", studentName);
             System.out.println("\nReason: Second line is not a number\n");
             return false;
