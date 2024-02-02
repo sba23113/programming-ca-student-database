@@ -5,7 +5,7 @@ import java.io.*;
 import java.util.Scanner;
 
 public class Main {
-    public static Boolean isNameValid(String studentName) {
+    private static Boolean isNameValid(String studentName) {
         // first line -> check name format (regex pattern: word (letters only), space, word (alphanumeric characters))
         if (studentName.matches("^[a-zA-Z]+[\\s][\\w]+$")) {
             return true;
@@ -18,7 +18,7 @@ public class Main {
         }
     }
 
-    public static Boolean isClassCountValid(String classString, String studentName) {
+    private static Boolean isClassCountValid(String classString, String studentName) {
         // second line -> confirm line consists of a number between 1 and 8 (incl.)
         try {
             int classCount = Integer.parseInt(classString);
@@ -40,7 +40,7 @@ public class Main {
         }
     }
 
-    public static Boolean isStudentNumberValid(String studentCode, String studentName) {
+    private static Boolean isStudentNumberValid(String studentCode, String studentName) {
         // third line -> check student number format: (number) 20 or higher, 2-3 letters, (number) 1-200
 
         // check if first two characters represent the last two digits of the year 2020 or higher (20, 21, 22, etc.)
@@ -101,14 +101,14 @@ public class Main {
         return true;
     }
 
-    public static void studentNumberPrintError(String studentName, String studentCode) {
+    private static void studentNumberPrintError(String studentName, String studentCode) {
         System.out.println("\nThis entry will not be written to output file:");
         System.out.printf("Student's name:    %s", studentName);
         System.out.printf("\nReason:            student number format invalid (%s)", studentCode);
         System.out.println("\nCorrect format:    last two digits of a year (2020 or higher) + course type (2-3 letter abbreviation: MSC, DIP, etc.) + ID number between 1 and 200 (incl.)");
         System.out.println("Example:           24DIP123");
     }
-    public static boolean readFromFile(String inFilename, String outFilename) {
+    private static boolean readFromFile(String inFilename, String outFilename) {
         String line;
         String studentName = "";
         String classCountString = "";
@@ -149,7 +149,7 @@ public class Main {
         return true;
     }
 
-    public static void readFromConsole(Scanner scanner, String outFilename) {
+    private static void readFromConsole(Scanner scanner, String outFilename) {
         // consume any newline characters left in scanner buffer
         scanner.nextLine();
 
@@ -167,7 +167,7 @@ public class Main {
         }
     }
 
-    public static boolean getDetailsFromConsole(Scanner scanner, String outFilename) {
+    private static boolean getDetailsFromConsole(Scanner scanner, String outFilename) {
         String userInput, studentName, classCountString, studentNumber;
 
         // get student's name
@@ -209,7 +209,7 @@ public class Main {
         return true;
     }
 
-    public static void writeToFile(String outFilename, String studentName, String classCountString, String studentNumber) {
+    private static void writeToFile(String outFilename, String studentName, String classCountString, String studentNumber) {
         // write student details to output file (append mode)
         try (BufferedWriter outFileReader = new BufferedWriter(new FileWriter(outFilename, true))) {
             outFileReader.write(studentNumber + " - " + studentName.split(" ")[1] + "\n");
