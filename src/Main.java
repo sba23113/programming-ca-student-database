@@ -138,7 +138,7 @@ public class Main {
             System.out.println("STUDENT DATABASE - MANUAL STUDENT ENTRY");
             System.out.println("**********************************************************************");
             System.out.println();
-            System.out.println("Enter student details as prompted (Submit an empty line to return to main menu).");
+            System.out.println("Enter student details as prompted. Submit an empty line to return to main menu).");
             if (!getDetailsFromConsole(scanner, outFilename)) {
                 break;
             }
@@ -148,29 +148,27 @@ public class Main {
     public static boolean getDetailsFromConsole(Scanner scanner, String outFilename) {
         String userInput, studentName, classCountString, studentNumber;
 
-        System.out.println("\nEnter the student's name: ");
+        System.out.print("\nEnter the student's name: ");
         userInput = scanner.nextLine();
         if (userInput.isEmpty()) {
             return false;
-        }
-        else if (!isNameValid(userInput)) {
+        } else if (!isNameValid(userInput)) {
             return true;
         } else {
             studentName = userInput;
         }
 
-        System.out.print("\nEnter the student's number of classes: ");
+        System.out.print("Enter the student's number of classes: ");
         userInput = scanner.nextLine();
         if (userInput.isEmpty()) {
             return false;
-        }
-        else if (!isClassCountValid(userInput, studentName)) {
+        } else if (!isClassCountValid(userInput, studentName)) {
             return true;
         } else {
             classCountString = userInput;
         }
 
-        System.out.print("\nEnter the student's ID number: ");
+        System.out.print("Enter the student's ID number: ");
         userInput = scanner.nextLine();
         if (userInput.isEmpty()) {
             return false;
