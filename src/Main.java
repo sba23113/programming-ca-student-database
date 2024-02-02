@@ -5,24 +5,25 @@ import java.io.*;
 import java.util.Scanner;
 
 public class Main {
-    // first line -> regex pattern: word (letters only), space, word (alphanumeric characters)
-    public static Boolean isNameValid(String nameString) {
-        if (nameString.matches("^[a-zA-Z]+[\\s][\\w]+$")) {
+    public static Boolean isNameValid(String studentName) {
+        // first line -> check name format (regex pattern: word (letters only), space, word (alphanumeric characters))
+        if (studentName.matches("^[a-zA-Z]+[\\s][\\w]+$")) {
             return true;
         } else {
             System.out.println("\nThis entry will not be written to output file:");
-            System.out.printf("Student's name:    %s", nameString);
+            System.out.printf("Student's name:    %s", studentName);
             System.out.println("\nReason:            name format invalid");
             System.out.println("Correct format:    word (letters only) + space + word (alphanumeric characters)");
             return false;
         }
     }
 
-    // second line -> confirm next line contains number between 1 and 8 (incl.)
     public static Boolean isClassCountValid(String classString, String studentName) {
+        // second line -> confirm line consists of a number between 1 and 8 (incl.)
         try {
             int classCount = Integer.parseInt(classString);
             if (classCount < 1 || classCount > 8) {
+                // if given number is outside allowed range
                 System.out.println("\nThis entry will not be written to output file:");
                 System.out.printf("Student's name:  %s", studentName);
                 System.out.println("\nReason:          number of classes must be between 1 and 8 (incl.)");
@@ -31,6 +32,7 @@ public class Main {
                 return true;
             }
         } catch (Exception e) {
+            //  if given value is not a number
             System.out.println("\nThis entry will not be written to output file:");
             System.out.printf("Student's name:  %s", studentName);
             System.out.printf("\nReason:          given value is not a number (%s)\n", classString);
@@ -38,8 +40,10 @@ public class Main {
         }
     }
 
-    // third line -> regex pattern: (number) 2, (number) 0-4, letter, letter, letter(?), (number) 1-200
     public static Boolean isStudentNumberValid(String studentCode, String studentName) {
+        // third line -> check student number format (regex pattern: (number) 2, (number) 0-4, 2-3 letters, (number) 1-200)
+
+        // check if first two characters represent the last two digits of years 2020-2024
         int year;
         try {
             year = Integer.parseInt(studentCode.substring(0, 2));
@@ -48,6 +52,7 @@ public class Main {
             return false;
         }
 
+        // course code part of validation
         String courseCode;
         int studentID;
         String studentIdStr;
@@ -105,23 +110,28 @@ public class Main {
         String classCountString = "";
         String studentNumber;
         int lineCounter = 0;
-        boolean isInfoValid = false;
+        boolean isDataValid = false;
+        
+        // read input file
         try (BufferedReader inFileReader = new BufferedReader(new FileReader(inFilename))) {
+            // iterate through the file line by line until end reached
             while ((line = inFileReader.readLine()) != null) {
                 lineCounter += 1;
+
+                // first line of the block (3 lines per student) -> check name format (regex pattern: word (letters only), space, word (alphanumeric characters))
                 if (lineCounter % 3 == 1) {
-                    // first line -> regex pattern: word (letters only), space, word (alphanumeric characters)
-                    isInfoValid = isNameValid(line);
+                    isDataValid = isNameValid(line);
                     studentName = line;
-                } else if (lineCounter % 3 == 2 && isInfoValid) {
-                    // second line -> confirm next line contains number between 1 and 8 (incl.)
-                    isInfoValid = isClassCountValid(line, studentName);
+                } else if (lineCounter % 3 == 2 && isDataValid) {
+                    // second line -> confirm line consists of a number between 1 and 8 (incl.)
+                    isDataValid = isClassCountValid(line, studentName);
                     classCountString = line;
-                } else if (lineCounter % 3 == 0 && isInfoValid) {
-                    // third line -> regex pattern: (number) 2, (number) 0-4, letter, letter, letter(?), (number) 1-200
-                    isInfoValid = isStudentNumberValid(line, studentName);
+                } else if (lineCounter % 3 == 0 && isDataValid) {
+                    // third line -> check student number format (regex pattern: (number) 2, (number) 0-4, 2-3 letters, (number) 1-200)
+                    isDataValid = isStudentNumberValid(line, studentName);
                     studentNumber = line;
-                    if (isInfoValid) {
+                    // if format is valid -> write to output file
+                    if (isDataValid) {
                         writeToFile(outFilename, studentName, classCountString, studentNumber);
                     }
                 }
@@ -239,15 +249,15 @@ public class Main {
             } else if (choice == 1) {
                 System.out.printf("Updating \"%s\" file... \n", outFilename);
                 isUpdated = readFromFile(inFilename, outFilename);
+
+                if (isUpdated) {
+                    System.out.println("\nUpdate complete!");
+                } else {
+                    System.out.println("\nUpdate not performed!");
+                }
             } else if (choice == 2) {
                 readFromConsole(scanner, outFilename);
             }
-            if (isUpdated) {
-                System.out.println("\nUpdate complete!");
-            } else {
-                System.out.println("\nUpdate not performed!");
-            }
-
         }
     }
 }
