@@ -129,6 +129,9 @@ public class Main {
     }
 
     public static void readFromConsole(Scanner scanner, String outFilename) {
+        // consume any newline characters left in scanner buffer
+        scanner.nextLine();
+
         while (true) {
             System.out.println();
             System.out.println("**********************************************************************");
