@@ -90,12 +90,12 @@ public class Main {
     }
 
     public static void studentNumberPrintError(String studentName, String studentCode) {
-        System.out.println("\nFollowing entry will not be written to output file:");
+        System.out.println("\nThis entry will not be written to output file:");
         System.out.printf("Student name: %s", studentName);
         System.out.printf("\nReason: Student number format invalid (%s)", studentCode);
         System.out.println("\nCorrect format: Last two digits of a year (2020-2024) + course type (MSC, DIP, etc.) + ID number between 1 and 200 (incl.)");
     }
-    public static void readFromFile(String inFilename, String outFilename) {
+    public static boolean readFromFile(String inFilename, String outFilename) {
         String line;
         String studentName = "";
         String classCountString = "";
@@ -125,20 +125,23 @@ public class Main {
         } catch (Exception e) {
             System.out.println();
             System.out.println("Input file access error!");
+            return false;
         }
+
+        return true;
     }
 
     public static void readFromConsole(Scanner scanner, String outFilename) {
         // consume any newline characters left in scanner buffer
         scanner.nextLine();
 
+        System.out.println("**********************************************************************");
+        System.out.println("STUDENT DATABASE - MANUAL STUDENT ENTRY");
+        System.out.println("**********************************************************************");
+
         while (true) {
             System.out.println();
-            System.out.println("**********************************************************************");
-            System.out.println("STUDENT DATABASE - MANUAL STUDENT ENTRY");
-            System.out.println("**********************************************************************");
-            System.out.println();
-            System.out.println("Enter student details as prompted. Submit an empty line to return to main menu).");
+            System.out.println("Enter student details or submit an empty line to return to main menu.");
             if (!getDetailsFromConsole(scanner, outFilename)) {
                 break;
             }
@@ -148,7 +151,7 @@ public class Main {
     public static boolean getDetailsFromConsole(Scanner scanner, String outFilename) {
         String userInput, studentName, classCountString, studentNumber;
 
-        System.out.print("\nEnter the student's name: ");
+        System.out.print("\nStudent's name: ");
         userInput = scanner.nextLine();
         if (userInput.isEmpty()) {
             return false;
@@ -158,7 +161,7 @@ public class Main {
             studentName = userInput;
         }
 
-        System.out.print("Enter the student's number of classes: ");
+        System.out.print("Number of classes: ");
         userInput = scanner.nextLine();
         if (userInput.isEmpty()) {
             return false;
@@ -168,7 +171,7 @@ public class Main {
             classCountString = userInput;
         }
 
-        System.out.print("Enter the student's ID number: ");
+        System.out.print("Student's ID number: ");
         userInput = scanner.nextLine();
         if (userInput.isEmpty()) {
             return false;
@@ -209,6 +212,7 @@ public class Main {
         String inFilename = "students.txt";
         String outFilename = "status.txt";
         int choice;
+        boolean isUpdated = false;
 
         while (true) {
             System.out.println();
@@ -229,11 +233,16 @@ public class Main {
                 break;
             } else if (choice == 1) {
                 System.out.printf("Updating \"%s\" file... \n", outFilename);
-                readFromFile(inFilename, outFilename);
+                isUpdated = readFromFile(inFilename, outFilename);
             } else if (choice == 2) {
                 readFromConsole(scanner, outFilename);
             }
-            System.out.println("\nUpdate complete.");
+            if (isUpdated) {
+                System.out.println("\nUpdate complete!");
+            } else {
+                System.out.println("\nUpdate not performed!");
+            }
+
         }
     }
 }
