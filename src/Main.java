@@ -10,7 +10,7 @@ public class Main {
             System.out.println("\nThis entry will not be written to output file:");
             System.out.printf("Student's name:    %s", nameString);
             System.out.println("\nReason:            name format invalid");
-            System.out.println("Correct format:    word (letters only), space, word (alphanumeric characters)");
+            System.out.println("Correct format:    word (letters only) + space + word (alphanumeric characters)");
             return false;
         }
     }
@@ -93,7 +93,8 @@ public class Main {
         System.out.println("\nThis entry will not be written to output file:");
         System.out.printf("Student's name:    %s", studentName);
         System.out.printf("\nReason:            student number format invalid (%s)", studentCode);
-        System.out.println("\nCorrect format:    last two digits of a year (2020-2024) + course type (MSC, DIP, etc.) + ID number between 1 and 200 (incl.)");
+        System.out.println("\nCorrect format:    last two digits of a year (2020-2024) + course type (2-3 letter abbreviation: MSC, DIP, etc.) + ID number between 1 and 200 (incl.)");
+        System.out.println("Example:           24DIP123");
     }
     public static boolean readFromFile(String inFilename, String outFilename) {
         String line;
