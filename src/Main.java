@@ -98,7 +98,7 @@ public class Main {
     public static void readFromFile(String inFilename, String outFilename) {
         String line;
         String studentName = "";
-        String yearString = "";
+        String classCountString = "";
         String studentNumber;
         int lineCounter = 0;
         boolean isInfoValid = false;
@@ -112,13 +112,13 @@ public class Main {
                 } else if (lineCounter % 3 == 2 && isInfoValid) {
                     // second line -> confirm next line contains number between 1 and 8 (incl.)
                     isInfoValid = isClassCountValid(line, studentName);
-                    yearString = line;
+                    classCountString = line;
                 } else if (lineCounter % 3 == 0 && isInfoValid) {
                     // third line -> regex pattern: (number) 2, (number) 0-4, letter, letter, letter(?), (number) 1-200
                     isInfoValid = isStudentNumberValid(line, studentName);
                     studentNumber = line;
                     if (isInfoValid) {
-                        writeToFile(outFilename, studentName, yearString, studentNumber);
+                        writeToFile(outFilename, studentName, classCountString, studentNumber);
                     }
                 }
             }
@@ -129,7 +129,6 @@ public class Main {
     }
 
     public static void readFromConsole(Scanner scanner, String outFilename) {
-        String userInput, studentName;
         while (true) {
             System.out.println();
             System.out.println("**********************************************************************");
@@ -138,10 +137,51 @@ public class Main {
             System.out.println();
             System.out.println("Enter student details as prompted (submitting empty line will return to main menu).");
             System.out.println("Enter the student's name:");
-            if (!getDetailsFromConsole(scanner)) {
+            if (!getDetailsFromConsole(scanner, outFilename)) {
                 break;
             }
         }
+    }
+
+    public static boolean getDetailsFromConsole(Scanner scanner, String outFilename) {
+        String userInput, studentName, classCountString, studentNumber;
+
+        System.out.print("\nEnter the student's name: ");
+        userInput = scanner.nextLine();
+        if (userInput.isEmpty()) {
+            return false;
+        }
+        else if (!isNameValid(userInput)) {
+            return true;
+        } else {
+            studentName = userInput;
+        }
+
+        System.out.print("\nEnter the student's number of classes: ");
+        userInput = scanner.nextLine();
+        if (userInput.isEmpty()) {
+            return false;
+        }
+        else if (!isClassCountValid(userInput, studentName)) {
+            return true;
+        } else {
+            classCountString = userInput;
+        }
+
+        System.out.print("\nEnter the student's ID number: ");
+        userInput = scanner.nextLine();
+        if (userInput.isEmpty()) {
+            return false;
+        }
+        else if (!isStudentNumberValid(userInput, studentName)) {
+            return true;
+        } else {
+            studentNumber = userInput;
+        }
+
+        writeToFile(outFilename, studentName, classCountString, studentNumber);
+
+        return true;
     }
 
     public static void writeToFile(String outFilename, String studentName, String yearString, String studentNumber) {
@@ -191,7 +231,7 @@ public class Main {
                 System.out.printf("Updating \"%s\" file... \n", outFilename);
                 readFromFile(inFilename, outFilename);
             } else if (choice == 2) {
-                readFromConsole(outFilename);
+                readFromConsole(scanner, outFilename);
             }
             System.out.println("\nUpdate complete.");
         }
