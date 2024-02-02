@@ -8,9 +8,9 @@ public class Main {
             return true;
         } else {
             System.out.println("\nThis entry will not be written to output file:");
-            System.out.printf("Student name: %s", nameString);
-            System.out.println("\nReason: Student name format invalid");
-            System.out.println("Correct format: Word (letters only), space, word (alphanumeric characters)");
+            System.out.printf("Student's name:    %s", nameString);
+            System.out.println("\nReason:            name format invalid");
+            System.out.println("Correct format:    word (letters only), space, word (alphanumeric characters)");
             return false;
         }
     }
@@ -21,16 +21,16 @@ public class Main {
             int classCount = Integer.parseInt(classString);
             if (classCount < 1 || classCount > 8) {
                 System.out.println("\nThis entry will not be written to output file:");
-                System.out.printf("Student name: %s", studentName);
-                System.out.println("\nReason: Number of classes must be between 1 and 8 (incl.)");
+                System.out.printf("Student's name:  %s", studentName);
+                System.out.println("\nReason:          number of classes must be between 1 and 8 (incl.)");
                 return false;
             } else {
                 return true;
             }
         } catch (Exception e) {
             System.out.println("\nThis entry will not be written to output file:");
-            System.out.printf("Student name: %s", studentName);
-            System.out.println("\nReason: Second line is not a number\n");
+            System.out.printf("Student's name:  %s", studentName);
+            System.out.printf("\nReason:          given value is not a number (%s)\n", classString);
             return false;
         }
     }
