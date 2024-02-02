@@ -1,10 +1,12 @@
 // Github link:
-// https://github.com/sba23113/programming-ca-student-database
+// https://github.com/sba23113/programming-ca-student-databasev
+
+package studentdatabase;
 
 import java.io.*;
 import java.util.Scanner;
 
-public class Main {
+public class StudentDatabase {
     private static Boolean isNameValid(String studentName) {
         // first line -> check name format (regex pattern: word (letters only), space, word (alphanumeric characters))
         if (studentName.matches("^[a-zA-Z]+[\\s][\\w]+$")) {
