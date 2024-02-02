@@ -202,6 +202,7 @@ public class Main {
                 workloadStr = "Full Time";
             }
             outFileReader.write(workloadStr + "\n");
+            System.out.printf("\n\"%s\" entry added to output file!\n", studentName);
         } catch (IOException e) {
             System.out.println("Error: Output file access error!");
         }
