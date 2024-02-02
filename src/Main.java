@@ -22,7 +22,7 @@ public class Main {
             if (classCount < 1 || classCount > 8) {
                 System.out.println("\nThis entry will not be written to output file:");
                 System.out.printf("Student name: %s", studentName);
-                System.out.println("\nReason: Number of classes must be between 1 and 8 inclusive");
+                System.out.println("\nReason: Number of classes must be between 1 and 8 (incl.)");
                 return false;
             } else {
                 return true;
@@ -161,7 +161,7 @@ public class Main {
             studentName = userInput;
         }
 
-        System.out.print("Number of classes: ");
+        System.out.print("Number of classes (1-8): ");
         userInput = scanner.nextLine();
         if (userInput.isEmpty()) {
             return false;
@@ -207,6 +207,7 @@ public class Main {
             System.out.println("Error: Output file access error!");
         }
     }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String inFilename = "students.txt";
