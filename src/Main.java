@@ -41,13 +41,13 @@ public class Main {
     }
 
     public static Boolean isStudentNumberValid(String studentCode, String studentName) {
-        // third line -> check student number format (regex pattern: (number) 2, (number) 0-4, 2-3 letters, (number) 1-200)
+        // third line -> check student number format: (number) 20 or higher, 2-3 letters, (number) 1-200
 
-        // check if first two characters represent the last two digits of years 2020-2024
+        // check if first two characters represent the last two digits of the year 2020 or higher (20, 21, 22, etc.)
         int year;
         try {
             year = Integer.parseInt(studentCode.substring(0, 2));
-            if (year < 20 || year > 24) {
+            if (year < 20) {
                 studentNumberPrintError(studentName, studentCode);
                 return false;
             }
@@ -105,7 +105,7 @@ public class Main {
         System.out.println("\nThis entry will not be written to output file:");
         System.out.printf("Student's name:    %s", studentName);
         System.out.printf("\nReason:            student number format invalid (%s)", studentCode);
-        System.out.println("\nCorrect format:    last two digits of a year (2020-2024) + course type (2-3 letter abbreviation: MSC, DIP, etc.) + ID number between 1 and 200 (incl.)");
+        System.out.println("\nCorrect format:    last two digits of a year (2020 or higher) + course type (2-3 letter abbreviation: MSC, DIP, etc.) + ID number between 1 and 200 (incl.)");
         System.out.println("Example:           24DIP123");
     }
     public static boolean readFromFile(String inFilename, String outFilename) {
@@ -131,7 +131,7 @@ public class Main {
                     isDataValid = isClassCountValid(line, studentName);
                     classCountString = line;
                 } else if (lineCounter % 3 == 0 && isDataValid) {
-                    // third line -> check student number format (regex pattern: (number) 2, (number) 0-4, 2-3 letters, (number) 1-200)
+                    // third line -> check student number format: (number) 20 or higher, 2-3 letters, (number) 1-200
                     isDataValid = isStudentNumberValid(line, studentName);
                     studentNumber = line;
                     // if format is valid -> write to output file
@@ -140,7 +140,7 @@ public class Main {
                     }
                 }
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println();
             System.out.println("Input file access error!");
             return false;
@@ -237,6 +237,9 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        // Github link:
+        // https://github.com/sba23113/programming-ca-student-database
+
         Scanner scanner = new Scanner(System.in);
         String inFilename = "students.txt";
         String outFilename = "status.txt";
