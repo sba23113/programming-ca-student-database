@@ -214,26 +214,31 @@ public class Main {
         try (BufferedWriter outFileReader = new BufferedWriter(new FileWriter(outFilename, true))) {
             outFileReader.write(studentNumber + " - " + studentName.split(" ")[1] + "\n");
 
-            // add a descripion of student's workload to output file
-            String workloadStr = "";
-            int classCount = Integer.parseInt(classCountString);
-            if (classCount == 1) {
-                workloadStr = "Very Light";
-            } else if (classCount == 2) {
-                workloadStr = "Light";
-            } else if (classCount > 2 && classCount < 6) {
-                workloadStr = "Part Time";
-            } else if (classCount >= 6) {
-                workloadStr = "Full Time";
-            }
+            // add a description of student's workload to output file
+            String workloadStr = getWorkloadString(classCountString);
 
             outFileReader.write(workloadStr + "\n");
 
-            // confirm successfull update of output file
+            // confirm successful update of output file
             System.out.printf("\n\"%s\" entry added to output file!\n", studentName);
         } catch (IOException e) {
             System.out.println("Error: Output file access error!");
         }
+    }
+
+    private static String getWorkloadString(String classCountString) {
+        String workloadStr = "";
+        int classCount = Integer.parseInt(classCountString);
+        if (classCount == 1) {
+            workloadStr = "Very Light";
+        } else if (classCount == 2) {
+            workloadStr = "Light";
+        } else if (classCount > 2 && classCount < 6) {
+            workloadStr = "Part Time";
+        } else if (classCount >= 6) {
+            workloadStr = "Full Time";
+        }
+        return workloadStr;
     }
 
     public static void main(String[] args) {
