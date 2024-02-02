@@ -91,9 +91,9 @@ public class Main {
 
     public static void studentNumberPrintError(String studentName, String studentCode) {
         System.out.println("\nThis entry will not be written to output file:");
-        System.out.printf("Student name: %s", studentName);
-        System.out.printf("\nReason: Student number format invalid (%s)", studentCode);
-        System.out.println("\nCorrect format: Last two digits of a year (2020-2024) + course type (MSC, DIP, etc.) + ID number between 1 and 200 (incl.)");
+        System.out.printf("Student's name:    %s", studentName);
+        System.out.printf("\nReason:            student number format invalid (%s)", studentCode);
+        System.out.println("\nCorrect format:    last two digits of a year (2020-2024) + course type (MSC, DIP, etc.) + ID number between 1 and 200 (incl.)");
     }
     public static boolean readFromFile(String inFilename, String outFilename) {
         String line;
