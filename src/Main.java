@@ -175,8 +175,7 @@ public class Main {
         userInput = scanner.nextLine();
         if (userInput.isEmpty()) {
             return false;
-        }
-        else if (!isStudentNumberValid(userInput, studentName)) {
+        } else if (!isStudentNumberValid(userInput, studentName)) {
             return true;
         } else {
             studentNumber = userInput;
@@ -187,12 +186,12 @@ public class Main {
         return true;
     }
 
-    public static void writeToFile(String outFilename, String studentName, String yearString, String studentNumber) {
+    public static void writeToFile(String outFilename, String studentName, String classCountString, String studentNumber) {
         // write student details to output file (append mode)
         try (BufferedWriter outFileReader = new BufferedWriter(new FileWriter(outFilename, true))) {
             outFileReader.write(studentNumber + " - " + studentName.split(" ")[1] + "\n");
             String workloadStr = "";
-            int classCount = Integer.parseInt(yearString);
+            int classCount = Integer.parseInt(classCountString);
             if (classCount == 1) {
                 workloadStr = "Very Light";
             } else if (classCount == 2) {
